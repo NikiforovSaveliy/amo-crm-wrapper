@@ -47,6 +47,7 @@ class UrlLibRequestHelper(AbstractRequestHelper):
         params: Optional[Dict] = None,
         headers: Optional[Dict] = None,
     ) -> Dict[str, Any]:
+        headers = headers or {}
         headers.update({"Content-Type": "application/json"})
         headers.update(self.token_storage.get_auth_header())
         json_body = json.dumps(data, default=str)
