@@ -24,7 +24,9 @@ class LeadEntity(BaseCustomFieldObject):
     account_id: Annotated[int, BodyField(alias="account_id")]
     name: Annotated[str, BodyField(alias="name", changeable=True)]
     price: Annotated[int, BodyField(alias="price", changeable=True)]
-    responsible_user_id: Annotated[int, BodyField(alias="responsible_user_id", changeable=True)]
+    responsible_user_id: Annotated[
+        int, BodyField(alias="responsible_user_id", changeable=True)
+    ]
     loss_reason_id: Annotated[int, BodyField(alias="loss_reason_id", changeable=True)]
     closed_at: Annotated[int, BodyField(alias="closed_at", changeable=True)]
 
