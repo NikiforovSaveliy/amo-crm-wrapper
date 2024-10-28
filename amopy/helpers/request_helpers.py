@@ -21,15 +21,14 @@ class AbstractRequestHelper(ABC):
         self._base_url = base_url
 
     @abstractmethod
-    def post(self, *args, **kwargs):
-        pass
-
-    @abstractmethod
-    def get(self, *args, **kwargs):
-        pass
-
-    @abstractmethod
-    def patch(self, *args, **kwargs):
+    def request(
+        self,
+        method: Literal["POST", "PUT", "PATCH", "GET"],
+        url: str,
+        data: Optional[Dict] = None,
+        params: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+    ):
         pass
 
     def get_url(self, path: str, params: dict = None):
@@ -38,6 +37,35 @@ class AbstractRequestHelper(ABC):
             encoded_params = urlencode(params)
             base_url += "?" + encoded_params
         return base_url
+
+    def get(
+        self, url: str, *, params: Optional[Dict] = None, headers: Optional[Dict] = None
+    ) -> Dict[str, Any]:
+        return self.request(method="GET", url=url, params=params, headers=headers)
+
+    def post(
+        self,
+        url: str,
+        *,
+        data: Optional[Dict] = None,
+        params: Optional[Dict] = None,
+        headers: Optional[Dict] = None
+    ) -> Dict[str, Any]:
+        return self.request(
+            method="POST", url=url, data=data, params=params, headers=headers
+        )
+
+    def patch(
+        self,
+        url: str,
+        *,
+        data: Optional[Dict] = None,
+        params: Optional[Dict] = None,
+        headers: Optional[Dict] = None
+    ) -> Dict[str, Any]:
+        return self.request(
+            method="PATCH", url=url, data=data, params=params, headers=headers
+        )
 
 
 class ResponseError(Exception):
@@ -101,28 +129,3 @@ class UrlLibRequestHelper(AbstractRequestHelper):
             raise InvalidResponseStatusError(
                 "Error occurred during decoding request body: {}".format(e)
             )
-
-    def get(
-        self, url: str, *, params: Optional[Dict] = None, headers: Optional[Dict] = None
-    ) -> Dict[str, Any]:
-        return self.request(method="GET", url=url, params=params)
-
-    def post(
-        self,
-        url: str,
-        *,
-        data: Optional[Dict] = None,
-        params: Optional[Dict] = None,
-        headers: Optional[Dict] = None
-    ) -> Dict[str, Any]:
-        return self.request(method="POST", url=url, data=data, params=params)
-
-    def patch(
-        self,
-        url: str,
-        *,
-        data: Optional[Dict] = None,
-        params: Optional[Dict] = None,
-        headers: Optional[Dict] = None
-    ) -> Dict[str, Any]:
-        return self.request(method="PATCH", url=url, data=data, params=params)
