@@ -67,15 +67,17 @@ def map_custom_fields(custom_fields: Iterable[Tuple[str, Any]], data: Dict):
 
 
 def is_body_field(annotation: Tuple[str, Any]) -> bool:
+    return is_annotated_subclasses(annotation, BodyField)
+
+
+def is_annotated_subclasses(annotation, metadata_class):
     attr_name, annotated = annotation
     actual_type, metadata = get_args(annotated)
-    return issubclass(type(metadata), BodyField)
+    return issubclass(type(metadata), metadata_class)
 
 
 def is_custom_field(annotation: Tuple[str, Any]) -> bool:
-    attr_name, annotated = annotation
-    actual_type, metadata = get_args(annotated)
-    return issubclass(type(metadata), CustomField)
+    return is_annotated_subclasses(annotation, CustomField)
 
 
 def map_fields(annotations: Dict[str, Any], data: Dict) -> Dict[str, Any]:
@@ -105,4 +107,5 @@ class BaseMapper:
         return entity_instance
 
     def to_dict(self, entity: Generic[EntityType]) -> Dict:
-        pass
+        type_hints = get_type_hints(self._entity, include_extras=True)
+        result = {}
