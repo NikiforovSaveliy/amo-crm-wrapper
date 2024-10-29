@@ -15,6 +15,7 @@ from amopy.objects.factories import (
     init_lead_object,
     init_contact_object,
 )
+from tests.mocks import contact_mock
 
 
 class TestInitCustomFieldObject(unittest.TestCase):
@@ -220,69 +221,7 @@ class TestInitLeadObject(unittest.TestCase):
 class TestInitContactObject(unittest.TestCase):
 
     def setUp(self):
-        self.valid_data = {
-            "id": 3,
-            "name": "Иван Иванов",
-            "first_name": "Иван",
-            "last_name": "Иванов",
-            "responsible_user_id": 504141,
-            "group_id": 0,
-            "created_by": 504141,
-            "updated_by": 504141,
-            "created_at": 1582117331,
-            "updated_at": 1590943929,
-            "closest_task_at": None,
-            "custom_fields_values": [
-                {
-                    "field_id": 3,
-                    "field_name": "Телефон",
-                    "field_code": "PHONE",
-                    "field_type": "multitext",
-                    "values": [{"value": "+79123", "enum_id": 1, "enum_code": "WORK"}],
-                }
-            ],
-            "account_id": 28805383,
-            "_embedded": {
-                "tags": [],
-                "leads": [
-                    {
-                        "id": 1,
-                        "_links": {
-                            "self": {"href": "https://example.amocrm.ru/api/v4/leads/1"}
-                        },
-                    },
-                    {
-                        "id": 3916883,
-                        "_links": {
-                            "self": {
-                                "href": "https://example.amocrm.ru/api/v4/leads/3916883"
-                            }
-                        },
-                    },
-                ],
-                "customers": [
-                    {
-                        "id": 134923,
-                        "_links": {
-                            "self": {
-                                "href": "https://example.amocrm.ru/api/v4/customers/134923"
-                            }
-                        },
-                    }
-                ],
-                "catalog_elements": [],
-                "companies": [
-                    {
-                        "id": 1,
-                        "_links": {
-                            "self": {
-                                "href": "https://example.amocrm.ru/api/v4/companies/1"
-                            }
-                        },
-                    }
-                ],
-            },
-        }
+        self.valid_data = contact_mock
 
     def test_valid_contact_object(self):
         contact = init_contact_object(self.valid_data)
