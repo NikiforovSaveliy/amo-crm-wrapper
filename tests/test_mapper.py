@@ -20,5 +20,14 @@ class TestBaseMapper(TestCase):
         self.assertEqual(mapped_entity.price, self.mock_data["price"])
 
     def test_to_dict(self):
+        mapped_entity = LeadEntity(
+            id=self.mock_data["id"],
+            created_by=self.mock_data["created_by"],
+            name=self.mock_data["name"],
+        )
 
-        self.fail()
+        converted_entity = self.mapper.to_dict(mapped_entity)
+
+        self.assertEqual(converted_entity["id"], self.mock_data["id"])
+        self.assertEqual(converted_entity["created_by"], self.mock_data["created_by"])
+        self.assertEqual(converted_entity["name"], self.mock_data["name"])
