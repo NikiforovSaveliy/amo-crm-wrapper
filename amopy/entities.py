@@ -1,8 +1,7 @@
 from abc import abstractmethod
-from typing import TypeVar, Annotated
+from typing import Annotated
 
 from amopy.fields import BodyField
-from amopy.objects.custom_fields import BaseCustomFieldObject
 
 
 class BaseEntity:
@@ -12,11 +11,12 @@ class BaseEntity:
     def entity_type(self):
         pass
 
+    def __init__(self, **attrs):
+        for attr, value in attrs.items():
+            setattr(self, attr, value)
 
-EntityType = TypeVar("EntityType", bound=BaseEntity)
 
-
-class LeadEntity(BaseCustomFieldObject):
+class LeadEntity(BaseEntity):
 
     id: Annotated[int, BodyField(alias="id")]
     created_by: Annotated[int, BodyField(alias="created_by")]

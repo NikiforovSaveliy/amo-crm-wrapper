@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import List, Union, Optional
+from typing import List, Union, Optional, TypeVar
 
 from amopy.exceptions import DataclassValidationError
 from amopy.objects.custom_fields import (
@@ -68,6 +68,9 @@ class BaseEntityObject(TypeValidationMixin):
         self.created_at = cast_datetime(self.created_at)
         self.updated_at = cast_datetime(self.updated_at)
         super().__post_init__()
+
+
+ObjectType = TypeVar("ObjectType", bound=BaseEntityObject)
 
 
 @dataclass
