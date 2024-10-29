@@ -1,15 +1,18 @@
 from dataclasses import dataclass, field
-from typing import Union, List, Literal, Any, Optional
+from typing import Union, List, Literal, Optional, TYPE_CHECKING
 
 from amopy.exceptions import DataclassFieldRequiredError
 from amopy.objects.values import TextValue, BooleanValue, EnumValue, DateTimeValue
+
+if TYPE_CHECKING:
+    from amopy.objects.types import ValueType
 
 
 @dataclass
 class BaseCustomFieldObject:
 
     field_type: str
-    values: List[Any] = field(default_factory=list)
+    values: List["ValueType"] = field(default_factory=list)
     field_id: Union[int, None] = None
     field_code: Union[str, None] = None
     field_name: Optional[str] = None
