@@ -7,7 +7,7 @@ from urllib import request
 
 from typing_extensions import TypeVar, Literal
 
-from amopy.helpers.token_storages import AbstractTokenStorage
+from amopy.token_storages import AbstractTokenStorage
 
 TokenStorageType = TypeVar("TokenStorageType", bound=AbstractTokenStorage)
 
