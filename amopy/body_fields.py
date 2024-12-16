@@ -1,5 +1,4 @@
 class BodyField:
 
-    def __init__(self, source: str, cast: type):
+    def __init__(self, source: str):
         self.source = source
-        self.cast = cast
