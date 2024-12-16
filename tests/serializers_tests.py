@@ -12,7 +12,7 @@ class TestEntityClass(Lead):
     text_field: TextField(123)
 
 
-class TestSerializers(TestCase):
+class SerializersTest(TestCase):
 
     def setUp(self):
         self.mock_data = {
