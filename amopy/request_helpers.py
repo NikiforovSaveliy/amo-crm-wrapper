@@ -123,7 +123,7 @@ class UrlLibRequestHelper(AbstractRequestHelper):
             )
         except URLError as e:
             raise InvalidResponseStatusError(
-                "Error occurred during makingg request: {}".format(e)
+                "Error occurred during making request: {}".format(e)
             )
         except json.JSONDecodeError as e:
             raise InvalidResponseStatusError(
