@@ -1,4 +1,6 @@
-from typing import Union
+from typing import Union, Annotated
+
+from amopy.values import TextValue
 
 
 class ImproperlyConfiguredField(Exception):
@@ -14,17 +16,15 @@ class CustomField:
         self,
         *,
         field_id: Union[int, None] = None,
-        field_code: Union[str, None] = None,
         value_object=None,
         many: bool,
     ):
-
-        if not (field_id or field_code):
-            raise ImproperlyConfiguredField(
-                self, "field_id or field_code should be set"
-            )
-
         self.field_id = field_id
-        self.field_code = field_code
         self.many = many
         self.value_object = value_object
+
+
+def TextField(field_id: int):  # noqa
+    return Annotated[
+        str, CustomField(field_id=field_id, value_object=TextValue, many=False)
+    ]
